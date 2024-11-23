@@ -1,12 +1,29 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { SetOptional } from 'type-fest';
+
+interface User {
+  id: string,
+  displayName: string,
+}
+
+type UserWithOptionalId = SetOptional<User, 'id'>;
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [],
+  template: `
+    <h1>Typefest SetOptional issue</h1>
+    <p>{{user.displayName}}</p>
+  `,
+  styleUrl: './app.component.scss',
+  standalone: true,
 })
 export class AppComponent {
-  title = 'intellij-typefest-setoptional-issue';
+  readonly user: UserWithOptionalId = {
+    displayName: 'Joe Bloggs'
+  };
+
+  constructor() {
+    console.log(this.user.displayName);
+  }
 }
